@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+    title: Swagger VSK Login - OpenAPI 3.0
+    description: "REST API for VSK's SpringBoot test project "
+    termsOfService: http://swagger.io/terms/
+    contact:
+        email: dev.safronov.maxim@gmail.com
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    version: 0.0.1a
+externalDocs:
+    description: Find out more about Swagger
+    url: http://swagger.io
+servers:
+    - url: https://api.swagger.io/api/v3
+tags:
+    - name: login
+      description: Basic login infrastructure
+paths:
+    /login:
+        post:
+            tags:
+                - login
+            summary: Authorise a user by phone and password
+            description: Authorise a user by phone and password
+            operationId: userLogin
+            requestBody:
+                description: Authorise a user by phone and password
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CredentialsRequest'
+                    application/xml:
+                        schema:
+                            $ref: '#/components/schemas/CredentialsRequest'
+                    application/x-www-form-urlencoded:
+                        schema:
+                            $ref: '#/components/schemas/CredentialsRequest'
+                required: true
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CredentialsResponse'
+                        application/xml:
+                            schema:
+                                $ref: '#/components/schemas/CredentialsResponse'
+                '400':
+                    description: Invalid credentials supplied
+                '404':
+                    description: User not found
+                '405':
+                    description: Validation exception
+components:
+    schemas:
+        CredentialsRequest:
+            required:
+                - phone
+                - password
+            type: object
+            properties:
+                phone:
+                    type: string
+                    description: User's phone number
+                    pattern: '^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
+                    example: '+79876543210'
+                password:
+                    type: string
+                    description: User's password
+                    example: 12345
+            xml:
+                name: credentialsRequest
+        CredentialsResponse:
+            required:
+                - valid
+            type: object
+            properties:
+                valid:
+                    type: boolean
+                    description: Login result
+            xml:
+                name: credentialsResponse
+    requestBodies:
+        Login:
+            description: User credentials that must be provided for authorization
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/CredentialsRequest'
+                application/xml:
+                    schema:
+                        $ref: '#/components/schemas/CredentialsRequest'

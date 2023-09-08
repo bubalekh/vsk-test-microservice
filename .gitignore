@@ -1,0 +1,7 @@
+/.idea/
+/target/
+/api/target/
+/shop/target/
+/specification/target/
+
+*.iml

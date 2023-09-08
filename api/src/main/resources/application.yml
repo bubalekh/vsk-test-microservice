@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+grpc:
+  client:
+    grpc-credentials-service:
+      address: static://shop:9090
+      negotiationType: plaintext

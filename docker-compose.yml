@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  api:
+    image: docker.io/microservice/api:1.0
+    ports:
+      - "8080:8080"
+
+  shop:
+    image: docker.io/microservice/shop:1.0
+    ports:
+      - "9090:9090"
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
